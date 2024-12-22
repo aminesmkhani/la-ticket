@@ -1,5 +1,27 @@
 models:
-  # ...
+  Ticket:
+    user_id: id foreign
+    title: string
+    text: text
+    priority: tinyInteger
+    status: tinyInteger default:0
+    file_path: string nullable
+    department: tinyInteger
+    relationships:
+      belongsTo: User
 
-controllers:
-  # ...
+  Reply:
+    ticket_id: id foreign:tickets
+    text: text
+    repliable: morphs
+    relationships:
+      morphMany: Reply
+
+  Admin:
+    name: string
+    email: string unique
+    password: password
+    department: tinyInteger
+    relationships:
+      hasMany: Ticket
+      morphMany: Reply
