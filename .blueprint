@@ -1,2 +1,15 @@
+created:
+    - database/factories/TicketFactory.php
+    - database/factories/ReplyFactory.php
+    - database/factories/AdminFactory.php
+    - database/migrations/2024_12_22_215709_create_tickets_table.php
+    - database/migrations/2024_12_22_215710_create_replies_table.php
+    - database/migrations/2024_12_22_215711_create_admins_table.php
+    - app/Models/Ticket.php
+    - app/Models/Reply.php
+    - app/Models/Admin.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
+    Ticket: { user_id: 'id foreign', title: string, text: text, priority: tinyInteger, status: 'tinyInteger default:0', file_path: 'string nullable', department: tinyInteger, relationships: { belongsTo: User } }
+    Reply: { ticket_id: 'id foreign:tickets', text: text, repliable: morphs, relationships: { morphMany: Reply } }
+    Admin: { name: string, email: 'string unique', password: password, department: tinyInteger, relationships: { hasMany: Ticket, morphMany: Reply } }
